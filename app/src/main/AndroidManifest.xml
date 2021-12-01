@@ -33,7 +33,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+            android:value="AIzaSyCosNCwk89v32IQBwhDPPccJTAILne9pdQ" />
 
         <activity
             android:name=".MapsActivity"
@@ -44,6 +44,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".DetailsActivity"
+            android:exported="true">
         </activity>
     </application>
 
