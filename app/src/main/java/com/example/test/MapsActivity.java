@@ -51,6 +51,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        /*
+        This prevents the user from scrolling.
+        Im going to keep it here just in case I need to use it to lock CPP's location.
+        -->googleMap.getUiSettings().setScrollGesturesEnabled(false);
+         */
+
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
@@ -61,7 +67,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         showRestroomsInMap(mMap);
     }
-
 
     private void showRestroomsInMap(final GoogleMap googleMap){
 
