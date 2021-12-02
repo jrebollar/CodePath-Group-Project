@@ -40,5 +40,6 @@ public class DetailsActivity extends AppCompatActivity {
         tvStatus.setText(snippet);
         tvCategory.setText(category);
         //ratingBar.setRating(rating);
+
     }
 }
