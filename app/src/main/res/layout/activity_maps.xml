@@ -39,14 +39,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnMenu"
         android:layout_alignEnd="@+id/btnMenu"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="0dp"
         android:clickable="true"
 
         android:focusable="true"
-        android:visibility="invisible"
+        android:src="@drawable/ic_settings"
 
-        android:src="@drawable/ic_settings" />
+        android:visibility="invisible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAdd"
@@ -54,13 +54,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnSettings"
         android:layout_alignEnd="@+id/btnSettings"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:clickable="true"
 
         android:focusable="true"
-        android:visibility="invisible"
+        android:src="@android:drawable/ic_input_add"
 
-        android:src="@android:drawable/ic_input_add" />
+        android:visibility="invisible" />
 
 </RelativeLayout>
