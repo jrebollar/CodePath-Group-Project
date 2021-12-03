@@ -26,6 +26,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -154,6 +156,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void showRestroomsInMap(final GoogleMap googleMap){
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereExists("Location");
+        final String[] detailsID = {""};
+        final int[] rating = {0};
         query.findInBackground((restrooms, e) -> {
             if (e == null) {
                 for(int i = 0; i < restrooms.size(); i++) {
@@ -161,21 +165,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Marker marker = googleMap.addMarker(new MarkerOptions().position(rrLocation).title(restrooms.get(i).getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     marker.setTitle(restrooms.get(i).getString("username"));
                     marker.setSnippet(restrooms.get(i).getString("Category"));
+                    ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
+                    query1.include("Name");
+                    query1.include("Name.User");
+                    query1.findInBackground((objects, e1) -> {
+                        for(int j = 0; j < objects.size(); j++){
+                            try {
+                                if(marker.getTitle().equals(objects.get(j).getParseObject("Name").fetchIfNeeded().getString("username"))){
+                                    detailsID[0] = objects.get(j).getString("Status");
+                                    rating[0] = objects.get(j).getNumber("Rating").intValue();
+                                }
+                            } catch (ParseException parseException) {
+                                parseException.printStackTrace();
+                            }
+                        }
+                    });
                 }
             } else {
                 // handle the error
                 Log.d("restroom", "Error: " + e.getMessage());
             }
             googleMap.setOnMarkerClickListener(marker1 -> {
-                String status = "";
-                int rating = 0;
                 String name = marker1.getTitle();
                 String category = marker1.getSnippet();
                 Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
                 i1.putExtra("name", name);
-                i1.putExtra("status", status);
                 i1.putExtra("category", category);
-                i1.putExtra("rating", rating);
+                i1.putExtra("status", detailsID[0]);
+                i1.putExtra("rating", rating[0]);
                 startActivity(i1);
                 return false;
             });
