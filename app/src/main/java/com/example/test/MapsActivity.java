@@ -3,6 +3,10 @@ package com.example.test;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -15,6 +19,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -28,6 +33,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
+    // Buttons
+    public static final String TAG = "MapsActivity";
+    private boolean clicked = false;
+    FloatingActionButton btnMenu;
+    FloatingActionButton btnSettings;
+    FloatingActionButton btnAdd;
+    /*
+    Animation fromBottom = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.from_bottom_anim);
+    Animation rotateClose = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.rotate_close_anim);
+    Animation rotateOpen = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.rotate_open_anim);
+    Animation toBottom = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.to_bottom_anim);
+
+     */
+    // Buttons end
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +58,72 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Buttons
+        btnMenu = (FloatingActionButton) findViewById(R.id.btnMenu);
+        btnSettings = (FloatingActionButton) findViewById(R.id.btnSettings);
+        btnAdd = (FloatingActionButton) findViewById(R.id.btnAdd);
+
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MapsActivity.this, "btnMenu Button!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "btnMenu Button!");
+
+                onMenuButtonClicked();
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MapsActivity.this, "btnSettings Button!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "btnSettings Button!");
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MapsActivity.this, "btnAdd Button!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "btnAdd Button!");
+            }
+        });
+        // Buttons end
     }
+
+    // Button logic
+    private void onMenuButtonClicked() {
+        setVisibilty(clicked);
+        //setAnimation(clicked);
+        clicked = !clicked;
+    }
+
+    private void setVisibilty(Boolean clicked) {
+        if(!clicked) {
+            btnSettings.setVisibility(View.VISIBLE);
+            btnAdd.setVisibility(View.VISIBLE);
+        }
+        else {
+            btnSettings.setVisibility(View.INVISIBLE);
+            btnAdd.setVisibility(View.INVISIBLE);
+        }
+    }
+    /*
+    private void setAnimation(Boolean clicked) {
+        if(!clicked) {
+            btnMenu.startAnimation(rotateOpen);
+            btnSettings.startAnimation(fromBottom);
+            btnAdd.startAnimation(fromBottom);
+        }
+        else {
+            btnMenu.startAnimation(rotateClose);
+            btnSettings.startAnimation(toBottom);
+            btnAdd.startAnimation(toBottom);
+        }
+    }
+    */
+    // Button logic end
 
     /**
      * Manipulates the map once available.
