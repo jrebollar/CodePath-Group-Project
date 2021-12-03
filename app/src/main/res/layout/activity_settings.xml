@@ -7,31 +7,61 @@
     tools:context=".SettingsActivity">
 
     <TextView
-        android:id="@+id/Filtertv"
+        android:id="@+id/filtertv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="52dp"
         android:text="Filter restrooms by..."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/All_Gender"
+    <RadioGroup
+        android:id="@+id/Filterrg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="All Gender"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Filtertv" />
+        android:layout_below="@+id/filtertv"
+        android:checkedButton="@+id/sound"
+        app:layout_constraintStart_toStartOf="@+id/filtertv"
+        app:layout_constraintTop_toBottomOf="@+id/filtertv">
 
-    <CheckBox
-        android:id="@+id/Men_Women"
+        <RadioButton
+            android:id="@+id/all_genderrb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Gender" />
+
+        <RadioButton
+            android:id="@+id/men_womenrb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Men/Women" />
+
+        <RadioButton
+            android:id="@+id/menrb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Men" />
+
+        <RadioButton
+            android:id="@+id/womenrb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Women" />
+
+        <RadioButton
+            android:id="@+id/allrb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show all" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Men/Women"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/All_Gender" />
+        android:text="Save Changes"
+        app:layout_constraintStart_toStartOf="@+id/Filterrg"
+        app:layout_constraintTop_toBottomOf="@+id/Filterrg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
