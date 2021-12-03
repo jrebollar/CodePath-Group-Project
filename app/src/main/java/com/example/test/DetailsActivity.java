@@ -9,8 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.parse.ParseFile;
-import com.bumptech.glide.Glide;
 
 
 public class DetailsActivity extends AppCompatActivity {
@@ -42,7 +40,6 @@ public class DetailsActivity extends AppCompatActivity {
         if(category == null){
             category = "N/A";
         }
-
         int rating = getIntent().getIntExtra("rating", 0);
         tvName.setText(title);
         tvStatus.setText(snippet);

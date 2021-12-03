@@ -169,17 +169,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 googleMap.setOnMarkerClickListener(marker1 -> {
                     String status = "";
                     int rating = 0;
-                    for(int i = 0; i < restrooms.size(); i++) {
-                        LatLng rrLocation = new LatLng(restrooms.get(i).getParseGeoPoint("Location").getLatitude(), restrooms.get(i).getParseGeoPoint("Location").getLongitude());
-                        if(marker1.getPosition() == rrLocation){
-                            try {
-                                status = restrooms.get(i).getParseObject("Name").fetch().getString("Status");
-                                rating = restrooms.get(i).getParseObject("Name").fetch().getNumber("Rating").intValue();
-                            } catch (ParseException parseException) {
-                                parseException.printStackTrace();
-                            }
-                        }
-                    }
                     String name = marker1.getTitle();
                     String category = marker1.getSnippet();
                     Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
