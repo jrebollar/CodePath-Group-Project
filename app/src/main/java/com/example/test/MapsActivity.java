@@ -78,27 +78,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     for(int i = 0; i < restrooms.size(); i++) {
                         LatLng rrLocation = new LatLng(restrooms.get(i).getParseGeoPoint("Location").getLatitude(), restrooms.get(i).getParseGeoPoint("Location").getLongitude());
                         Marker marker = googleMap.addMarker(new MarkerOptions().position(rrLocation).title(restrooms.get(i).getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        int finalI = i;
-                        marker.setTitle(restrooms.get(finalI).getString("username"));
-                        String name = marker.getTitle();
-                        marker.setSnippet(restrooms.get(finalI).getString("Category"));
-                        String category = marker.getSnippet();
-                        googleMap.setOnMarkerClickListener(marker1 -> {
-                            //String status = restrooms.get(finalI).getString("Status");
-                            //int rating = restrooms.get(finalI).getNumber("Rating").intValue();
-                            Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
-                            i1.putExtra("name", name);
-                            //i1.putExtra("status", status);
-                            i1.putExtra("category", category);
-                            //i.putExtra("rating", rating);
-                            startActivity(i1);
-                            return false;
-                        });
+                        marker.setTitle(restrooms.get(i).getString("username"));
+                        marker.setSnippet(restrooms.get(i).getString("Category"));
                     }
                 } else {
                     // handle the error
                     Log.d("restroom", "Error: " + e.getMessage());
                 }
+                googleMap.setOnMarkerClickListener(marker1 -> {
+                    String name = marker1.getTitle();
+                    String category = marker1.getSnippet();
+                    //String status = restrooms.get(finalI).getString("Status");
+                    //int rating = restrooms.get(finalI).getNumber("Rating").intValue();
+                    Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
+                    i1.putExtra("name", name);
+                    //i1.putExtra("status", status);
+                    i1.putExtra("category", category);
+                    //i.putExtra("rating", rating);
+                    startActivity(i1);
+                    return false;
+                });
             }
         });
         ParseQuery.clearAllCachedResults();
