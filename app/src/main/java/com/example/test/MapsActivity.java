@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -39,12 +40,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     FloatingActionButton btnMenu;
     FloatingActionButton btnSettings;
     FloatingActionButton btnAdd;
+    Button fromBottom;
     /*
     Animation fromBottom = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.from_bottom_anim);
     Animation rotateClose = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.rotate_close_anim);
     Animation rotateOpen = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.rotate_open_anim);
     Animation toBottom = AnimationUtils.loadAnimation(MapsActivity.this, R.anim.to_bottom_anim);
-
      */
     // Buttons end
 
@@ -63,6 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnMenu = (FloatingActionButton) findViewById(R.id.btnMenu);
         btnSettings = (FloatingActionButton) findViewById(R.id.btnSettings);
         btnAdd = (FloatingActionButton) findViewById(R.id.btnAdd);
+        fromBottom = findViewById(R.anim.from_bottom_anim);
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
