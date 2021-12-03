@@ -71,8 +71,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MapsActivity.this, "btnSettings Button!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapsActivity.this, "btnSettings Button!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "btnSettings Button!");
+                startActivity(new Intent(MapsActivity.this, SettingsActivity.class));
             }
         });
 
@@ -141,9 +142,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        // Add a marker in CPP and move the camera
         LatLng cpp = new LatLng(34.0583, -117.8218);
-        mMap.addMarker(new MarkerOptions().position(cpp).title("Marker at CPP"));
+        //mMap.addMarker(new MarkerOptions().position(cpp).title("Marker at CPP"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(cpp));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15)); // sets zoom
 
