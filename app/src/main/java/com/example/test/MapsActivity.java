@@ -151,7 +151,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void showRestroomsInMap(final GoogleMap googleMap){
-
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereExists("Location");
         query.findInBackground(new FindCallback<ParseUser>() {
@@ -168,20 +167,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.d("restroom", "Error: " + e.getMessage());
                 }
                 googleMap.setOnMarkerClickListener(marker1 -> {
+                    String status = "";
+                    int rating = 0;
+                    for(int i = 0; i < restrooms.size(); i++) {
+                        LatLng rrLocation = new LatLng(restrooms.get(i).getParseGeoPoint("Location").getLatitude(), restrooms.get(i).getParseGeoPoint("Location").getLongitude());
+                        if(marker1.getPosition() == rrLocation){
+                            try {
+                                status = restrooms.get(i).getParseObject("Name").fetch().getString("Status");
+                                rating = restrooms.get(i).getParseObject("Name").fetch().getNumber("Rating").intValue();
+                            } catch (ParseException parseException) {
+                                parseException.printStackTrace();
+                            }
+                        }
+                    }
                     String name = marker1.getTitle();
                     String category = marker1.getSnippet();
-                    //String status = restrooms.get(finalI).getString("Status");
-                    //int rating = restrooms.get(finalI).getNumber("Rating").intValue();
                     Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
                     i1.putExtra("name", name);
-                    //i1.putExtra("status", status);
+                    i1.putExtra("status", status);
                     i1.putExtra("category", category);
-                    //i.putExtra("rating", rating);
+                    i1.putExtra("rating", rating);
                     startActivity(i1);
                     return false;
                 });
             }
         });
+
         ParseQuery.clearAllCachedResults();
     }
 }
