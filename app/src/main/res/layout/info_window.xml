@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivImage"
         android:layout_alignParentStart="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="0dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:ellipsize="end"
         android:maxLines="3"
         android:minHeight="32dp"
+        android:textAlignment="center"
         android:textSize="32dp"
         android:textStyle="bold"
         tools:text="test test test"></TextView>
@@ -29,7 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
         android:textSize="24dp"
         tools:text="text text text" />
 
@@ -40,8 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/category"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:numStars="5"
         android:rating="5"
@@ -53,8 +58,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ratingBar"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:ellipsize="end"
         android:textSize="24dp"
         tools:text="description description description">
@@ -70,5 +77,19 @@
         android:scaleType="centerCrop"
         app:srcCompat="@color/teal_200"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="200dp"
+        android:layout_height="4dp"
+        android:layout_above="@+id/snippet"
+        android:layout_below="@+id/ratingBar"
+        android:layout_alignParentStart="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#A8A8A8"
+        android:visibility="visible" />
 
 </RelativeLayout>

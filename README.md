@@ -33,7 +33,8 @@ An app that displays the locations of nearby toilets/restrooms through the use o
 - [x] User can see details of a restroom (opens a new screen)
    - <img src='POOP rating scn 11-26.png ' title='Rating Screen' width='250' alt='Prototype ratings screen' />
 - [ ] User can see/rate/comment on the location and cleanliness of the restroom
-- [ ] User can filter restrooms shown (Male/Female/All Gender/No Filter)
+- [x] User can filter restrooms shown (Male/Female/All Gender/No Filter)
+   - <img src='POOP 12-03 settigs.gif' title='Settings/Filter screen' width='250' alt='Filter screen' />
 - [ ] User can add restroom in a location
 
 **Optional Nice-to-have Stories**

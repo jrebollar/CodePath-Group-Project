@@ -70,19 +70,29 @@ public class SettingsActivity extends AppCompatActivity {
 
                 // find which radioButton is checked by id
                 if(selectedId == all_genderrb.getId()) {
-                    i.putExtra("filter", "ALl Gender");
+                    i.putExtra("filter", "All Gender");
+                    i.putExtra("filterSet", true);
+                    i.putExtra("singleGender", false);
                     //textView.setText("All Gender Restrooms will be shown");
                 } else if(selectedId == men_womenrb.getId()) {
                     i.putExtra("filter", "Men/Women");
+                    i.putExtra("filterSet", true);
+                    i.putExtra("singleGender", false);
                     //textView.setText("Men/Women's Restrooms will be shown");
                 }else if(selectedId == menrb.getId()) {
                     i.putExtra("filter", "Men");
+                    i.putExtra("filterSet", true);
+                    i.putExtra("singleGender", true);
                     //textView.setText("Men's Restrooms will be shown");
                 } else if(selectedId == womenrb.getId()) {
                     i.putExtra("filter", "Women");
+                    i.putExtra("filterSet", true);
+                    i.putExtra("singleGender", true);
                     //textView.setText("Women's Restrooms will be shown");
                 } else {
                     i.putExtra("filter", "All");
+                    i.putExtra("filterSet", false);
+                    i.putExtra("singleGender", false);
                     //textView.setText("All Restrooms will be shown");
                 }
                 Toast.makeText(getApplicationContext(), "Filter has been applied", Toast.LENGTH_SHORT).show();

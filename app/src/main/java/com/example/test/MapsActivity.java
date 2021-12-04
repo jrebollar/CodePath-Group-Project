@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -36,6 +37,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+
+    private String filter = "All";
+    private boolean haveFilter = false;
+    private boolean isSingleGender = false;
 
     // Buttons
     public static final String TAG = "MapsActivity";
@@ -51,6 +56,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        filter = intent.getStringExtra("filter");
+        haveFilter = intent.getBooleanExtra("filterSet", false);
+        isSingleGender = intent.getBooleanExtra("singleGender", false);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -65,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MapsActivity.this, "btnMenu Button!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapsActivity.this, "btnMenu Button!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "btnMenu Button!");
 
                 onMenuButtonClicked();
@@ -157,10 +167,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void showRestroomsInMap(final GoogleMap googleMap){
+        String[] detailsID = new String[35];
+        String[] status = {""};
+        int[] rating = {3};
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereExists("Location");
-        final String[] detailsID = {""};
-        final int[] rating = {0};
+
+        if(isSingleGender) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add("Men/Women");
+            list.add(filter);
+            query.whereContainedIn("Category", list);
+        } else if(haveFilter) query.whereEqualTo("Category", filter);
+
         query.findInBackground((restrooms, e) -> {
             if (e == null) {
                 for(int i = 0; i < restrooms.size(); i++) {
@@ -168,21 +188,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Marker marker = googleMap.addMarker(new MarkerOptions().position(rrLocation).title(restrooms.get(i).getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     marker.setTitle(restrooms.get(i).getString("username"));
                     marker.setSnippet(restrooms.get(i).getString("Category"));
-                    ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
-                    query1.include("Name");
-                    query1.include("Name.User");
-                    query1.findInBackground((objects, e1) -> {
-                        for(int j = 0; j < objects.size(); j++){
-                            try {
-                                if(marker.getTitle().equals(objects.get(j).getParseObject("Name").fetchIfNeeded().getString("username"))){
-                                    detailsID[0] = objects.get(j).getString("Status");
-                                    rating[0] = objects.get(j).getNumber("Rating").intValue();
-                                }
-                            } catch (ParseException parseException) {
-                                parseException.printStackTrace();
-                            }
-                        }
-                    });
+                    detailsID[i] = restrooms.get(i).getObjectId();
+
                 }
             } else {
                 // handle the error
@@ -191,10 +198,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             googleMap.setOnMarkerClickListener(marker1 -> {
                 String name = marker1.getTitle();
                 String category = marker1.getSnippet();
+
+                ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
+                query1.whereExists("Rating");
+                query1.findInBackground((objects, e1) -> {
+                    for (int j = 0; j < objects.size(); j++) {
+                        try {
+                            if (name.equals(objects.get(j).getParseUser("Name").fetchIfNeeded().getString("username"))) {
+                                status[0] = objects.get(j).getString("Status");
+                                rating[0] = objects.get(j).getNumber("Rating").intValue();
+                                break;
+                            }
+                        } catch (ParseException parseException) {
+                            parseException.printStackTrace();
+                        }
+                    }
+                });
                 Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
                 i1.putExtra("name", name);
                 i1.putExtra("category", category);
-                i1.putExtra("status", detailsID[0]);
+                i1.putExtra("status", status[0]);
                 i1.putExtra("rating", rating[0]);
                 startActivity(i1);
                 return false;

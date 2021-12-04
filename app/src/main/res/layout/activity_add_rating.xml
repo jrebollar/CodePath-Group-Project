@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddRatingActivity">
+
+    <RatingBar
+        android:id="@+id/starrb"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="94dp"
+        android:layout_weight="1"
+        android:numStars="5"
+        app:layout_constraintBottom_toTopOf="@+id/commentet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/commentet"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="380dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Type a comment..."
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/starrb" />
+
+    <TextView
+        android:id="@+id/commenttv"
+        android:layout_width="226dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="159dp"
+        android:layout_marginBottom="160dp"
+        android:text="Add a Comment (optional)"
+        app:layout_constraintBottom_toTopOf="@+id/statustv"
+        app:layout_constraintStart_toStartOf="@+id/commentet"
+        app:layout_constraintTop_toTopOf="@+id/starrb" />
+
+    <TextView
+        android:id="@+id/statustv"
+        android:layout_width="229dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="58dp"
+        android:text="Any warnings or issues?"
+        app:layout_constraintStart_toStartOf="@+id/statuset"
+        app:layout_constraintTop_toBottomOf="@+id/commentet" />
+
+    <EditText
+        android:id="@+id/statuset"
+        android:layout_width="0dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="54dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Type a status..."
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/savebtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/statustv" />
+
+    <Button
+        android:id="@+id/cancelbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="55dp"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/savebtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="57dp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
