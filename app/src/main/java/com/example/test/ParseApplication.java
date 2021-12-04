@@ -10,8 +10,6 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        ParseObject.registerSubclass(restrooms.class);
-
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("D3a51A7tjMOdS3vr7AlilT2SN8cGnA6tjYeZkjoB")
                 .clientKey("4b4bNaDXBAYgxkFJz0cDioo8GzGTkGbwMOqCrovQ")

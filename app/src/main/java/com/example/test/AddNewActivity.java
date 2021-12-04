@@ -86,8 +86,8 @@ public class AddNewActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //String location = etLocation.getText().toString();
-                //newRestroom(location);
+                String location = etLocation.getText().toString();
+                newRestroom(location, "poop");
                 goMapsActivity();
             }
         });
@@ -168,10 +168,9 @@ public class AddNewActivity extends AppCompatActivity {
                     Toast.makeText(AddNewActivity.this, "Permission denied.", Toast.LENGTH_SHORT).show();
                 }
             }
-            switch (requestCode){
-                case REQUEST_LOCATION:
-                    saveCurrentUserLocation();
-                    break;
+            case REQUEST_LOCATION: {
+                saveCurrentUserLocation();
+                break;
             }
         }
     }
@@ -184,11 +183,11 @@ public class AddNewActivity extends AppCompatActivity {
         }
     }
 
-    private void newRestroom (String userName) {
+    private void newRestroom (String restroom, String password) {
         ParseUser user = new ParseUser();
 
-        user.setUsername(userName);
-        user.setPassword("Poop");
+        user.setUsername(restroom);
+        user.setPassword(password);
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -196,9 +195,16 @@ public class AddNewActivity extends AppCompatActivity {
                 goMapsActivity();
             }
         });
-
-
+        saveCurrentUserLocation();
     }
+
+    /*
+    public void Check(View v) {
+        if() {
+
+        }
+    }
+     */
 
     public void goMapsActivity() {
         Intent i = new Intent(this, MapsActivity.class);
