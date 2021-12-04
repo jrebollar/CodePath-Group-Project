@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -10,13 +11,13 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:maxLines="3"
         android:minHeight="32dp"
         android:textSize="32dp"
         android:textStyle="bold"
@@ -29,7 +30,7 @@
         android:layout_below="@+id/name"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:textSize="14dp"
+        android:textSize="24dp"
         tools:text="text text text" />
 
     <RatingBar
@@ -55,10 +56,19 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
-        android:textColor="#434343"
         android:textSize="24dp"
         tools:text="description description description">
 
     </TextView>
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@color/teal_200"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </RelativeLayout>

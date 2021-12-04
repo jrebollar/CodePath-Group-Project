@@ -2,6 +2,7 @@ package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,21 +65,28 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                /*int selectedId = radioGroup.getCheckedRadioButtonId();
+                Intent i = new Intent(SettingsActivity.this, MapsActivity.class);
+                int selectedId = radioGroup.getCheckedRadioButtonId();
 
                 // find which radioButton is checked by id
                 if(selectedId == all_genderrb.getId()) {
-                    textView.setText("All Gender Restrooms will be shown");
+                    i.putExtra("filter", "ALl Gender");
+                    //textView.setText("All Gender Restrooms will be shown");
                 } else if(selectedId == men_womenrb.getId()) {
-                    textView.setText("Men/Women's Restrooms will be shown");
+                    i.putExtra("filter", "Men/Women");
+                    //textView.setText("Men/Women's Restrooms will be shown");
                 }else if(selectedId == menrb.getId()) {
-                    textView.setText("Men's Restrooms will be shown");
+                    i.putExtra("filter", "Men");
+                    //textView.setText("Men's Restrooms will be shown");
                 } else if(selectedId == womenrb.getId()) {
-                    textView.setText("Women's Restrooms will be shown");
+                    i.putExtra("filter", "Women");
+                    //textView.setText("Women's Restrooms will be shown");
                 } else {
-                    textView.setText("All Restrooms will be shown");
-                }*/
+                    i.putExtra("filter", "All");
+                    //textView.setText("All Restrooms will be shown");
+                }
                 Toast.makeText(getApplicationContext(), "Filter has been applied", Toast.LENGTH_SHORT).show();
+                startActivity(i);
             }
         });
     }
