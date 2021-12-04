@@ -42,6 +42,7 @@ public class DetailsActivity extends AppCompatActivity {
             category = "N/A";
         }
         int rating = getIntent().getIntExtra("rating", 0);
+
         tvName.setText(title);
         tvStatus.setText(status);
         tvCategory.setText(category);
