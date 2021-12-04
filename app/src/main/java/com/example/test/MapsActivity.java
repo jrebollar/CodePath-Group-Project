@@ -156,7 +156,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void showRestroomsInMap(final GoogleMap googleMap){
-        String[] detailsID = {""};
+        String[] detailsID = new String[35];
+        String[] status = {""};
         int[] rating = {3};
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -168,18 +169,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Marker marker = googleMap.addMarker(new MarkerOptions().position(rrLocation).title(restrooms.get(i).getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     marker.setTitle(restrooms.get(i).getString("username"));
                     marker.setSnippet(restrooms.get(i).getString("Category"));
-                    String restroomID = restrooms.get(i).getObjectId();
+                    detailsID[i] = restrooms.get(i).getObjectId();
 
-                    ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
-                    query1.whereExists("Rating");
-                    query1.findInBackground((objects, e1) -> {
-                        for(int j = 0; j < objects.size(); j++){
-                            if(restroomID.equals(objects.get(j).getParseUser("Name").getObjectId())){
-                                detailsID[0] = objects.get(j).getString("Status");
-                                rating[0] = objects.get(j).getNumber("Rating").intValue();
-                            }
-                        }
-                    });
                 }
             } else {
                 // handle the error
@@ -189,10 +180,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String name = marker1.getTitle();
                 String category = marker1.getSnippet();
 
+                ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
+                query1.whereExists("Rating");
+                query1.findInBackground((objects, e1) -> {
+                    for (int j = 0; j < objects.size(); j++) {
+                        try {
+                            if (name.equals(objects.get(j).getParseUser("Name").fetchIfNeeded().getString("username"))) {
+                                status[0] = objects.get(j).getString("Status");
+                                rating[0] = objects.get(j).getNumber("Rating").intValue();
+                                break;
+                            }
+                        } catch (ParseException parseException) {
+                            parseException.printStackTrace();
+                        }
+                    }
+                });
                 Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
                 i1.putExtra("name", name);
                 i1.putExtra("category", category);
-                i1.putExtra("status", detailsID[0]);
+                i1.putExtra("status", status[0]);
                 i1.putExtra("rating", rating[0]);
                 startActivity(i1);
                 return false;
