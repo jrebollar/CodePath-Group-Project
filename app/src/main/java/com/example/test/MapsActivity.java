@@ -36,6 +36,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
+    private String filter = "All";
+    private boolean haveFilter = false;
+    private boolean isSingleGender = false;
+
     // Buttons
     public static final String TAG = "MapsActivity";
     private boolean clicked = false;
@@ -49,6 +53,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Intent intent = getIntent();
+        filter = intent.getStringExtra("filter");
+        haveFilter = intent.getBooleanExtra("filterSet", false);
+        isSingleGender = intent.getBooleanExtra("singleGender", false);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -161,6 +170,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereExists("Location");
+        if(haveFilter) query.whereEqualTo("Category", filter);
+
         query.findInBackground((restrooms, e) -> {
             if (e == null) {
                 for(int i = 0; i < restrooms.size(); i++) {
