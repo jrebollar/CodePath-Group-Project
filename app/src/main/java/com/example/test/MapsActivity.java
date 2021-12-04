@@ -81,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 Toast.makeText(MapsActivity.this, "btnAdd Button!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "btnAdd Button!");
+                goAddNewActivity();
             }
         });
         // Buttons end
@@ -110,12 +111,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Animation rotateClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_close_anim);
         Animation toBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
         if(!clicked) {
-            btnMenu.startAnimation(rotateOpen);
+            btnMenu.startAnimation(rotateClose);
             btnSettings.startAnimation(fromBottom);
             btnAdd.startAnimation(fromBottom);
         }
         else {
-            btnMenu.startAnimation(rotateClose);
+            btnMenu.startAnimation(rotateOpen);
             btnSettings.startAnimation(toBottom);
             btnAdd.startAnimation(toBottom);
         }
@@ -183,5 +184,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         ParseQuery.clearAllCachedResults();
+    }
+
+    private void goAddNewActivity() {
+        Intent i = new Intent(this, AddNewActivity.class);
+        startActivity(i);
+        finish();
     }
 }
