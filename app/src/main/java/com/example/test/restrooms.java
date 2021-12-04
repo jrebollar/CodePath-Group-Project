@@ -2,6 +2,7 @@ package com.example.test;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 @ParseClassName("restrooms")
 public class restrooms extends ParseObject {
