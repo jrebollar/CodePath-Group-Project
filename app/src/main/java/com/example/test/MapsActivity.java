@@ -73,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MapsActivity.this, "btnMenu Button!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapsActivity.this, "btnMenu Button!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "btnMenu Button!");
 
                 onMenuButtonClicked();
@@ -171,7 +171,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereExists("Location");
-        if(haveFilter) query.whereEqualTo("Category", filter);
+
+        if(isSingleGender) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add("Men/Women");
+            list.add(filter);
+            query.whereContainedIn("Category", list);
+        } else if(haveFilter) query.whereEqualTo("Category", filter);
 
         query.findInBackground((restrooms, e) -> {
             if (e == null) {
