@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -155,10 +156,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void showRestroomsInMap(final GoogleMap googleMap){
+        String[] detailsID = {""};
+        int[] rating = {3};
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereExists("Location");
-        final String[] detailsID = {""};
-        final int[] rating = {0};
         query.findInBackground((restrooms, e) -> {
             if (e == null) {
                 for(int i = 0; i < restrooms.size(); i++) {
@@ -166,18 +168,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Marker marker = googleMap.addMarker(new MarkerOptions().position(rrLocation).title(restrooms.get(i).getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     marker.setTitle(restrooms.get(i).getString("username"));
                     marker.setSnippet(restrooms.get(i).getString("Category"));
+                    String restroomID = restrooms.get(i).getObjectId();
+
                     ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
-                    query1.include("Name");
-                    query1.include("Name.User");
+                    query1.whereExists("Rating");
                     query1.findInBackground((objects, e1) -> {
                         for(int j = 0; j < objects.size(); j++){
-                            try {
-                                if(marker.getTitle().equals(objects.get(j).getParseObject("Name").fetchIfNeeded().getString("username"))){
-                                    detailsID[0] = objects.get(j).getString("Status");
-                                    rating[0] = objects.get(j).getNumber("Rating").intValue();
-                                }
-                            } catch (ParseException parseException) {
-                                parseException.printStackTrace();
+                            if(restroomID.equals(objects.get(j).getParseUser("Name").getObjectId())){
+                                detailsID[0] = objects.get(j).getString("Status");
+                                rating[0] = objects.get(j).getNumber("Rating").intValue();
                             }
                         }
                     });
@@ -189,6 +188,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             googleMap.setOnMarkerClickListener(marker1 -> {
                 String name = marker1.getTitle();
                 String category = marker1.getSnippet();
+
                 Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
                 i1.putExtra("name", name);
                 i1.putExtra("category", category);
