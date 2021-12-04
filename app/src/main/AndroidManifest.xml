@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".ParseApplication"
@@ -19,6 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Test">
+
         <activity
             android:name=".SettingsActivity"
             android:exported="true" />
@@ -32,7 +35,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCosNCwk89v32IQBwhDPPccJTAILne9pdQ" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".MapsActivity"
@@ -46,6 +49,9 @@
         </activity>
         <activity
             android:name=".DetailsActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".AddNewActivity"
             android:exported="true"></activity>
     </application>
 

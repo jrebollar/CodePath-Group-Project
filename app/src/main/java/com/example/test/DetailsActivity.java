@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.parse.ParseFile;
+import com.parse.ParseObject;
 
 
 public class DetailsActivity extends AppCompatActivity {
@@ -33,18 +33,17 @@ public class DetailsActivity extends AppCompatActivity {
         if(title == null){
             title = "N/A";
         }
-        String snippet = getIntent().getStringExtra("status");
-        if(snippet == null || snippet == ""){
-            snippet = "N/A";
+        String status = getIntent().getStringExtra("status");
+        if(status == null || status.equals("")){
+            status = "N/A";
         }
         String category = getIntent().getStringExtra("category");
         if(category == null){
             category = "N/A";
         }
-
         int rating = getIntent().getIntExtra("rating", 0);
         tvName.setText(title);
-        tvStatus.setText(snippet);
+        tvStatus.setText(status);
         tvCategory.setText(category);
         ratingBar.setRating(rating);
 
