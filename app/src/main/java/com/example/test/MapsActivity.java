@@ -35,6 +35,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
+    private String filter = "All";
+    private boolean haveFilter = false;
+    private boolean isSingleGender = false;
+
     // Buttons
     public static final String TAG = "MapsActivity";
     private boolean clicked = false;
@@ -48,6 +52,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Intent intent = getIntent();
+        filter = intent.getStringExtra("filter");
+        haveFilter = intent.getBooleanExtra("filterSet", false);
+        isSingleGender = intent.getBooleanExtra("single gender", false);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -157,8 +166,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void showRestroomsInMap(final GoogleMap googleMap){
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereExists("Location");
+        /*if(isSingleGender) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add("Men/Women");
+            list.add(filter);
+            query.whereContainedIn("Category", list);
+        } else*/
+        if(haveFilter) query.whereEqualTo("Category", filter);
         final String[] detailsID = {""};
         final int[] rating = {0};
+
         query.findInBackground((restrooms, e) -> {
             if (e == null) {
                 for(int i = 0; i < restrooms.size(); i++) {
@@ -170,9 +187,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     query1.include("Name");
                     query1.include("Name.User");
                     query1.findInBackground((objects, e1) -> {
-                        for(int j = 0; j < objects.size(); j++){
+                        for (int j = 0; j < objects.size(); j++) {
                             try {
-                                if(marker.getTitle().equals(objects.get(j).getParseObject("Name").fetchIfNeeded().getString("username"))){
+                                if (marker.getTitle().equals(objects.get(j).getParseObject("Name").fetchIfNeeded().getString("username"))) {
                                     detailsID[0] = objects.get(j).getString("Status");
                                     rating[0] = objects.get(j).getNumber("Rating").intValue();
                                 }
