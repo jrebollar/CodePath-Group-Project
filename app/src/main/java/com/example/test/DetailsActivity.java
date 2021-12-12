@@ -1,10 +1,14 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,8 @@ public class DetailsActivity extends AppCompatActivity {
     RatingBar ratingBar;
     ImageView ivImage;
 
+    private Button addnewbtn;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +34,17 @@ public class DetailsActivity extends AppCompatActivity {
         tvCategory = findViewById(R.id.category);
         ratingBar = findViewById(R.id.ratingBar);
         ivImage = findViewById(R.id.ivImage);
+
+        addnewbtn = (Button) findViewById(R.id.addnewbtn);
+        addnewbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent i = new Intent(DetailsActivity.this, AddRatingActivity.class);
+                Toast.makeText(getApplicationContext(), "Pls", Toast.LENGTH_SHORT).show();
+                //startActivity(i);
+                startActivity(new Intent(DetailsActivity.this, AddRatingActivity.class));
+            }
+        });
 
         String title = getIntent().getStringExtra("name");
         if(title == null){

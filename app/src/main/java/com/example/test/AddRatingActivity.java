@@ -48,11 +48,11 @@ public class AddRatingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(AddRatingActivity.this, MapsActivity.class);
 
-                ParseUser currentUser = ParseUser.getCurrentUser();
+                /*ParseUser currentUser = ParseUser.getCurrentUser();
                 float rating = starrb.getRating();
                 String comment = commentet.getText().toString();
                 String status = statuset.getText().toString();
-                savePost(rating, comment, status, currentUser);
+                savePost(rating, comment, status, currentUser);*/
 
                 Toast.makeText(getApplicationContext(), "Comment posted.", Toast.LENGTH_SHORT).show();
                 startActivity(i);
@@ -60,7 +60,7 @@ public class AddRatingActivity extends AppCompatActivity {
         });
     }
 
-    private void savePost(float rating, String comment, String status, ParseUser currentUser) {
+    /*private void savePost(float rating, String comment, String status, ParseUser currentUser) {
         Submission submission = new Submission();
         submission.setRating(rating);
         submission.setComment(comment);
@@ -79,5 +79,5 @@ public class AddRatingActivity extends AppCompatActivity {
                 statuset.setText("");
             }
         });
-    }
+    }*/
 }

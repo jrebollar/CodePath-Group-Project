@@ -53,6 +53,9 @@
         <activity
             android:name=".AddNewActivity"
             android:exported="true"></activity>
+        <activity
+            android:name=".AddRatingActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>
