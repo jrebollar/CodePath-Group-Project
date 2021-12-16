@@ -203,6 +203,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
                 query1.whereExists("Rating");
+                query1.whereEqualTo("restrooms", "PlacePointer");
+
                 query1.findInBackground((objects, e1) -> {
                     for (int j = 0; j < objects.size(); j++) {
                         try {
