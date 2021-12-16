@@ -57,7 +57,7 @@ public class DetailsRecyclerAdapter extends RecyclerView.Adapter<DetailsRecycler
 
         public void bind(Submission post) {
             tvStatus.setText(post.getStatus());
-            tvName.setText(post.getUser().getUsername());
+            //tvName.setText(post.getUser().getUsername());
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(post.getImage().getUrl()).into(ivImage);

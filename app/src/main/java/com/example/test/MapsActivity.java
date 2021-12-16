@@ -94,9 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MapsActivity.this, "btnAdd Button!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "btnAdd Button!");
-                goAddNewActivity();
+                startActivity(new Intent(MapsActivity.this, AddNewActivity.class));
             }
         });
         // Buttons end
@@ -232,11 +230,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         ParseQuery.clearAllCachedResults();
-    }
-
-    private void goAddNewActivity() {
-        Intent i = new Intent(this, AddNewActivity.class);
-        startActivity(i);
-        finish();
     }
 }
