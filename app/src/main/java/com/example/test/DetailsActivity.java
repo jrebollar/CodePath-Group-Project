@@ -3,6 +3,7 @@ package com.example.test;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,10 +40,16 @@ public class DetailsActivity extends AppCompatActivity {
         addnewbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent i = new Intent(DetailsActivity.this, AddRatingActivity.class);
-                Toast.makeText(getApplicationContext(), "Pls", Toast.LENGTH_SHORT).show();
-                //startActivity(i);
-                startActivity(new Intent(DetailsActivity.this, AddRatingActivity.class));
+                Intent i = new Intent(DetailsActivity.this, AddRatingActivity.class);
+                //Toast.makeText(getApplicationContext(), "Pls", Toast.LENGTH_SHORT).show();
+                String un = getIntent().getStringExtra("name");
+                startActivity(i);
+                /*if(un != null) {
+                    i.putExtra("username", un);
+                    startActivity(i);
+                } else {
+                    Log.d("Detail", "Error: No username found");
+                }*/
             }
         });
 

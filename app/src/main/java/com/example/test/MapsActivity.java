@@ -171,7 +171,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String[] status = {""};
         int[] rating = {3};
 
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        //ParseQuery<ParseUser> query = ParseUser.getQuery();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("place");
         query.whereExists("Location");
 
         if(isSingleGender) {
