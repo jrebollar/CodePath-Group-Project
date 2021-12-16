@@ -1,12 +1,16 @@
 package com.example.test;
 
+import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+@ParseClassName("restrooms")
 public class Submission extends ParseObject {
     public static final float KEY_RATING = 3;
     public static final String KEY_COMMENT = "comment";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
 
     public int getRating() {
@@ -31,6 +35,14 @@ public class Submission extends ParseObject {
 
     public void setStatus(String status) {
         put(KEY_STATUS, status);
+    }
+
+    public ParseFile getImage(){
+        return getParseFile(KEY_IMAGE);
+    }
+
+    public void setImage(ParseFile parseFile){
+        put(KEY_IMAGE, parseFile);
     }
 
     public ParseUser getUser() {
