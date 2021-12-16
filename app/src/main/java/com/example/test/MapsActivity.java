@@ -182,7 +182,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else if(haveFilter) query.whereEqualTo("Category", filter);
 
         query.findInBackground((restrooms, e) -> {
-            String picid = "";
             if (e == null) {
                 for(int i = 0; i < restrooms.size(); i++) {
                     LatLng rrLocation = new LatLng(restrooms.get(i).getParseGeoPoint("Location").getLatitude(), restrooms.get(i).getParseGeoPoint("Location").getLongitude());
@@ -190,19 +189,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     marker.setTitle(restrooms.get(i).getString("username"));
                     marker.setSnippet(restrooms.get(i).getString("Category"));
                     detailsID[i] = restrooms.get(i).getObjectId();
-                    picid  = restrooms.get(i).getParseFile("Image").getUrl();
 
                 }
             } else {
                 // handle the error
                 Log.d("restroom", "Error: " + e.getMessage());
             }
-            String finalPicid = picid;
             googleMap.setOnMarkerClickListener(marker1 -> {
 
                 String name = marker1.getTitle();
                 String category = marker1.getSnippet();
-                String urltemp = "";
 
                 ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
                 query1.whereExists("Rating");
@@ -224,7 +220,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 i1.putExtra("category", category);
                 i1.putExtra("status", status[0]);
                 i1.putExtra("rating", rating[0]);
-                i1.putExtra("img", finalPicid);
                 startActivity(i1);
                 return false;
             });
