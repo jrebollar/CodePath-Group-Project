@@ -205,7 +205,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 query1.findInBackground((objects, e1) -> {
                     for (int j = 0; j < objects.size(); j++) {
                         try {
-                            if (name.equals(objects.get(j).getParseUser("PlacePointer").fetchIfNeeded().getString("username"))) {
+                            if (name.equals(objects.get(j).getParseObject("PlacePointer").fetchIfNeeded().getString("name"))) {
                                 status[0] = objects.get(j).getString("Status");
                                 rating[0] = objects.get(j).getNumber("Rating").intValue();
                                 break;
