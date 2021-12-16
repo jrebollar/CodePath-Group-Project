@@ -205,12 +205,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 query1.whereExists("Rating");
                 query1.whereEqualTo("restrooms", "PlacePointer");
 
+                Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
+
                 query1.findInBackground((objects, e1) -> {
                     for (int j = 0; j < objects.size(); j++) {
                         try {
                             if (name.equals(objects.get(j).getParseObject("PlacePointer").fetchIfNeeded().getString("name"))) {
                                 status[0] = objects.get(j).getString("Status");
                                 rating[0] = objects.get(j).getNumber("Rating").intValue();
+                                i1.putExtra("Plc", objects.get(j));
                                 break;
                             }
                         } catch (ParseException parseException) {
@@ -218,7 +221,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 });
-                Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
+                // moved i1 declaration stmt so I can add the current object thx -Rebecca
                 i1.putExtra("name", name);
                 i1.putExtra("category", category);
                 i1.putExtra("status", status[0]);

@@ -11,7 +11,7 @@ public class Submission extends ParseObject {
     public static final String KEY_COMMENT = "comment";
     public static final String KEY_STATUS = "status";
     public static final String KEY_IMAGE = "image";
-    public static final String KEY_USER = "user";
+    public static final String KEY_PLACE = "place";
 
     public int getRating() {
         return getInt(String.valueOf(KEY_RATING));
@@ -45,12 +45,13 @@ public class Submission extends ParseObject {
         put(KEY_IMAGE, parseFile);
     }
 
-    public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+    // check for these
+    public ParseObject getObject() {
+        return getParseObject(KEY_PLACE);
     }
 
-    public void setUser(ParseUser user) {
-        put(KEY_USER, user);
+    public void setPlace(ParseObject place) {
+        put(KEY_PLACE, place);
     }
 
 

@@ -43,13 +43,15 @@ public class DetailsActivity extends AppCompatActivity {
                 Intent i = new Intent(DetailsActivity.this, AddRatingActivity.class);
                 //Toast.makeText(getApplicationContext(), "Pls", Toast.LENGTH_SHORT).show();
                 String un = getIntent().getStringExtra("name");
-                startActivity(i);
-                /*if(un != null) {
-                    i.putExtra("username", un);
+                if(un != null) {
+                    //i.putExtra("username", un);
+                    ParseObject object = getIntent().getParcelableExtra("Plc");
+                    i.putExtra("plc", object);
                     startActivity(i);
                 } else {
                     Log.d("Detail", "Error: No username found");
-                }*/
+                }
+                startActivity(i);
             }
         });
 

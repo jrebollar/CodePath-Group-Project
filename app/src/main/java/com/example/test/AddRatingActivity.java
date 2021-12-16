@@ -12,6 +12,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -47,12 +48,17 @@ public class AddRatingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(AddRatingActivity.this, MapsActivity.class);
-
-                /*ParseUser currentUser = ParseUser.getCurrentUser();
+                /*ParseUser currentUser = ParseUser.getCurrentUser();*/
+                ParseObject currentPlace = getIntent().getParcelableExtra("plc");
                 float rating = starrb.getRating();
+                if(rating == 0) {
+                    Toast.makeText(AddRatingActivity.this, "Please add a rating", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String comment = commentet.getText().toString();
                 String status = statuset.getText().toString();
-                savePost(rating, comment, status, currentUser);*/
+
+                savePost(rating, comment, status, currentPlace);
 
                 Toast.makeText(getApplicationContext(), "Comment posted.", Toast.LENGTH_SHORT).show();
                 startActivity(i);
@@ -60,12 +66,12 @@ public class AddRatingActivity extends AppCompatActivity {
         });
     }
 
-    /*private void savePost(float rating, String comment, String status, ParseUser currentUser) {
+    private void savePost(float rating, String comment, String status, ParseObject currentPlace) {
         Submission submission = new Submission();
         submission.setRating(rating);
         submission.setComment(comment);
         submission.setStatus(status);
-        submission.setUser(currentUser);
+        submission.setPlace(currentPlace);
         submission.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -79,5 +85,5 @@ public class AddRatingActivity extends AppCompatActivity {
                 statuset.setText("");
             }
         });
-    }*/
+    }
 }
