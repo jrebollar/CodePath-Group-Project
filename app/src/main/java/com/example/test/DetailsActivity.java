@@ -1,6 +1,8 @@
 package com.example.test;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 
@@ -23,6 +28,7 @@ public class DetailsActivity extends AppCompatActivity {
     TextView tvCategory;
     RatingBar ratingBar;
     ImageView ivImage;
+    ImageView anImage;
 
     private Button addnewbtn;
 
@@ -63,6 +69,28 @@ public class DetailsActivity extends AppCompatActivity {
             category = "N/A";
         }
         int rating = getIntent().getIntExtra("rating", 0);
+
+
+        ParseObject object = getIntent().getParcelableExtra("Plc");
+        ParseFile image = object.getParseFile("Image");
+        if(image == null) Toast.makeText(DetailsActivity.this, "no", Toast.LENGTH_SHORT).show();
+        image.getDataInBackground(new GetDataCallback() {
+                    public void done(byte[] data, ParseException e) {
+                        if (e == null) {
+                            // Decode the Byte[] into
+                            // Bitmap
+                            Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            // initialize
+                            //ImageView image = (ImageView) findViewById(R.id.image);
+                            // Set the Bitmap into the
+                            // ImageView
+                            ivImage.setImageBitmap(bmp);
+                        } else {
+                            Log.d("test",
+                                    "Problem load image the data.");
+                        }
+                    }
+                });
 
         tvName.setText(title);
         tvStatus.setText(status);

@@ -69,7 +69,7 @@
 
     </TextView>
 
-    <com.android.volley.toolbox.NetworkImageView
+    <ImageView
         android:id="@+id/ivImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
