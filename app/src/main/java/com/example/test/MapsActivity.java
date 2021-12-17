@@ -200,13 +200,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String name = marker1.getTitle();
                 String category = marker1.getSnippet();
 
-                ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
-                query1.whereExists("Rating");
-                query1.whereEqualTo("PlacePointer", marker1.getId());
-                int[] rating = {3};
-                int[] counter = {0};
+                //ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
+                //query1.whereExists("Rating");
+                //query1.whereEqualTo("PlacePointer", marker1.getId());
                 Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
-                query1.findInBackground((objects, e1) -> {
+                /*query1.findInBackground((objects, e1) -> {
                     for (int j = 0; j < objects.size(); j++) {
                         try {
                             if (marker1.getId().equals(objects.get(j).getParseObject("PlacePointer").fetchIfNeeded().getObjectId())) {
@@ -221,7 +219,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                     //rating[0] = rating[0]/counter[0];
-                });
+                });*/
 
                 /*query.getInBackground(detailsID[Integer.parseInt(marker1.getId().replaceAll("[^0-9]", ""))], new GetCallback<ParseObject>() {
                     public void done(ParseObject object, ParseException e) {
@@ -243,8 +241,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // moved i1 declaration stmt so I can add the current object thx -Rebecca
                 i1.putExtra("name", name);
                 i1.putExtra("category", category);
-                i1.putExtra("status", status[0]);
-                i1.putExtra("rating", rating[0]);
+                //i1.putExtra("status", status[0]);
+                //i1.putExtra("rating", rating[0]);
                 startActivity(i1);
                 return false;
             });

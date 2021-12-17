@@ -16,10 +16,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 
 public class DetailsActivity extends AppCompatActivity {
@@ -28,7 +33,6 @@ public class DetailsActivity extends AppCompatActivity {
     TextView tvCategory;
     RatingBar ratingBar;
     ImageView ivImage;
-    ImageView anImage;
 
     private Button addnewbtn;
 
@@ -57,45 +61,62 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
         String title = getIntent().getStringExtra("name");
-        if(title == null){
+        if (title == null) {
             title = "N/A";
         }
         String status = getIntent().getStringExtra("status");
-        if(status == null || status.equals("")){
+        if (status == null || status.equals("")) {
             status = "N/A";
         }
         String category = getIntent().getStringExtra("category");
-        if(category == null){
+        if (category == null) {
             category = "N/A";
         }
         int rating = getIntent().getIntExtra("rating", 0);
-
 
         ParseObject object = getIntent().getParcelableExtra("Plc");
         ParseFile image = object.getParseFile("Image");
         if(image == null) Toast.makeText(DetailsActivity.this, "no", Toast.LENGTH_SHORT).show();
         image.getDataInBackground(new GetDataCallback() {
-                    public void done(byte[] data, ParseException e) {
-                        if (e == null) {
-                            // Decode the Byte[] into
-                            // Bitmap
-                            Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                            // initialize
-                            //ImageView image = (ImageView) findViewById(R.id.image);
-                            // Set the Bitmap into the
-                            // ImageView
-                            ivImage.setImageBitmap(bmp);
-                        } else {
-                            Log.d("test",
-                                    "Problem load image the data.");
-                        }
-                    }
-                });
+            public void done(byte[] data, ParseException e) {
+                if (e == null) {
+                    // Decode the Byte[] into
+                    // Bitmap
+                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    // initialize
+                    //ImageView image = (ImageView) findViewById(R.id.image);
+                    // Set the Bitmap into the
+                    // ImageView
+                    ivImage.setImageBitmap(bmp);
+                } else {
+                    Log.d("test",
+                            "Problem load image the data.");
+                }
+            }
+        });
 
         tvName.setText(title);
-        tvStatus.setText(status);
         tvCategory.setText(category);
-        ratingBar.setRating(rating);
+        queryPosts();
 
+    }
+
+    private void queryPosts() {
+        ParseQuery<Submission> query = ParseQuery.getQuery(Submission.class);
+        query.include(Submission.KEY_USER);
+        query.findInBackground(new FindCallback<Submission>() {
+            @Override
+            public void done(List<Submission> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                for (Submission submission : objects) {
+                    int rating = submission.getRating();
+                    ratingBar.setRating(rating);
+                    String status = submission.getStatus();
+                    tvStatus.setText(status);
+                }
+            }
+        });
     }
 }
