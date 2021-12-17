@@ -28,14 +28,6 @@
         android:layout_height="198dp"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <EditText
-        android:id="@+id/etComments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Comments"
-        android:inputType="textPersonName" />
-
     <CheckBox
         android:id="@+id/cbMale"
         android:layout_width="match_parent"

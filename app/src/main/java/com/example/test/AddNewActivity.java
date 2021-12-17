@@ -39,9 +39,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.io.File;
@@ -51,23 +53,20 @@ import java.io.InputStream;
 public class AddNewActivity extends AppCompatActivity {
 
     public static final String TAG = "AddNewActivity";
-    private static final int IMAGE_CAPTURE_CODE = 1001;
+
     private EditText etLocation;
     private Button btnPicture;
     private ImageView ivPhoto;
-    private EditText etComments;
     private CheckBox cbMale;
     private CheckBox cbFemale;
     private Button btnSubmit;
-    private GoogleMap mMap;
-    private static final int PERMISSION_CODE = 1000;
-    Uri imageUri;
+
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public String photoFileName = "photo.jpg";
+    private File photoFile;
 
     private static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
-
-    public String photoFileName = "restroom.jpg";
-    private File photoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +76,30 @@ public class AddNewActivity extends AppCompatActivity {
         etLocation = findViewById(R.id.etLocation);
         btnPicture = findViewById(R.id.btnPicture);
         ivPhoto = findViewById(R.id.ivPhoto);
-        etComments = findViewById(R.id.etComments);
         cbMale = findViewById(R.id.cbMale);
         cbFemale = findViewById(R.id.cbFemale);
         btnSubmit = findViewById(R.id.btnSubmit);
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String location = etLocation.getText().toString();
-                newRestroom(location, "poop");
-                goMapsActivity();
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                MapsActivity maps = new MapsActivity();
+
+                if (location.isEmpty()) {
+                    Toast.makeText(AddNewActivity.this, "Description cannot", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (photoFile == null || ivPhoto.getDrawable() == null) {
+                    Toast.makeText(AddNewActivity.this, "There is no image!", Toast.LENGTH_SHORT).show();
+                } else {
+                    newRestroom(location, currentUser, photoFile);
+                    //maps.saveCurrentUserLocation();
+                    Toast.makeText(AddNewActivity.this, "New location added!", Toast.LENGTH_SHORT).show();
+                    goMapsActivity();
+                }
             }
         });
 
@@ -96,115 +107,104 @@ public class AddNewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(AddNewActivity.this, "Capture image.", Toast.LENGTH_SHORT).show();
-                cameraLogic();
+                onLaunchCamera(ivPhoto);
             }
         });
     }
 
-    private void cameraLogic() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(checkSelfPermission(Manifest.permission.CAMERA) ==
-            PackageManager.PERMISSION_DENIED ||
-            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-            PackageManager.PERMISSION_DENIED) {
-                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                requestPermissions(permission, PERMISSION_CODE);
-            } else {
-                openCamera();
-            }
-        } else {
-            openCamera();
+    private void newRestroom(String location, ParseUser currentUser, File photoFile) {
+        Place newRestroom = new Place();
+        newRestroom.setName(location);
+        newRestroom.setImage(new ParseFile(photoFile));
+        newRestroom.setUser(currentUser);
+
+        if (cbFemale.isChecked() && cbMale.isChecked()) {
+            newRestroom.setCategory("All Gender");
         }
-    }
+        else if (cbFemale.isChecked()) {
+            newRestroom.setCategory("Female");
+        }
+        else if (cbMale.isChecked()) {
+            newRestroom.setCategory("Male");
+        }
 
-    private void openCamera() {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
-        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
-    }
-
-    private void saveCurrentUserLocation() {
-        // requesting permission to get user's location
         if(ActivityCompat.checkSelfPermission(AddNewActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(AddNewActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(AddNewActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         }
         else {
-            // getting last know user's location
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-            // checking if the location is null
-            if(location != null){
-                // if it isn't, save it to Back4App Dashboard
-                ParseGeoPoint currentUserLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-
-                ParseUser currentUser = ParseUser.getCurrentUser();
-
-                if (currentUser != null) {
-                    currentUser.put("Location", currentUserLocation);
-                    currentUser.saveInBackground();
-                } else {
-                    // do something like coming back to the login activity
-                }
-            }
-            else {
-                // if it is null, do something like displaying error and coming back to the menu activity
-            }
+            Location coords = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            ParseGeoPoint currentUserLocation = new ParseGeoPoint(coords.getLatitude(), coords.getLongitude());
+            newRestroom.setLocation(currentUserLocation);
         }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera();
-                } else {
-                    Toast.makeText(AddNewActivity.this, "Permission denied.", Toast.LENGTH_SHORT).show();
-                }
-            }
-            case REQUEST_LOCATION: {
-                saveCurrentUserLocation();
-                break;
-            }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            ivPhoto.setImageURI(imageUri);
-        }
-    }
-
-    private void newRestroom (String restroom, String password) {
-        ParseUser user = new ParseUser();
-
-        user.setUsername(restroom);
-        user.setPassword(password);
-        user.signUpInBackground(new SignUpCallback() {
+        newRestroom.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                Toast.makeText(AddNewActivity.this, "New restroom added!", Toast.LENGTH_SHORT).show();
-                goMapsActivity();
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(AddNewActivity.this, "Error while saving!", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Post save was successful!");
+                etLocation.setText("");
+                ivPhoto.setImageResource(0);
             }
         });
-        saveCurrentUserLocation();
     }
 
-    /*
-    public void Check(View v) {
-        if() {
+    public void onLaunchCamera(View view) {
+        // create Intent to take a picture and return control to the calling application
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Create a File reference for future access
+        photoFile = getPhotoFileUri(photoFileName);
 
+        // wrap File object into a content provider
+        // required for API >= 24
+        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
+        Uri fileProvider = FileProvider.getUriForFile(AddNewActivity.this, "com.codepath.fileprovider.test", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            // Start the image capture intent to take photo
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
-     */
+
+    // Returns the File for a photo stored on disk given the fileName
+    public File getPhotoFileUri(String fileName) {
+        // Get safe storage directory for photos
+        // Use `getExternalFilesDir` on Context to access package-specific directories.
+        // This way, we don't need to request external read/write runtime permissions.
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            Log.d(TAG, "failed to create directory");
+        }
+
+        // Return the file target for the photo based on filename
+        File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
+
+        return file;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // by this point we have the camera photo on disk
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                // RESIZE BITMAP, see section below
+                // Load the taken image into a preview
+                ImageView ivPreview = (ImageView) findViewById(R.id.ivPhoto);
+                ivPreview.setImageBitmap(takenImage);
+            } else { // Result was a failure
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     public void goMapsActivity() {
         Intent i = new Intent(this, MapsActivity.class);

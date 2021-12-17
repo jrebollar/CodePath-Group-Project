@@ -12,6 +12,7 @@ public class ParseApplication extends Application {
 
         // Register your parse models
         ParseObject.registerSubclass(Submission.class);
+        ParseObject.registerSubclass(Place.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("D3a51A7tjMOdS3vr7AlilT2SN8cGnA6tjYeZkjoB")
