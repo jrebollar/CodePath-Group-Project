@@ -33,6 +33,7 @@ public class DetailsActivity extends AppCompatActivity {
     TextView tvCategory;
     RatingBar ratingBar;
     ImageView ivImage;
+    public String instanceID;
 
     private Button addnewbtn;
 
@@ -64,15 +65,12 @@ public class DetailsActivity extends AppCompatActivity {
         if (title == null) {
             title = "N/A";
         }
-        String status = getIntent().getStringExtra("status");
-        if (status == null || status.equals("")) {
-            status = "N/A";
-        }
+        tvName.setText(title);
         String category = getIntent().getStringExtra("category");
         if (category == null) {
             category = "N/A";
         }
-        int rating = getIntent().getIntExtra("rating", 0);
+        tvCategory.setText(category);
 
         ParseObject object = getIntent().getParcelableExtra("Plc");
         ParseFile image = object.getParseFile("Image");
@@ -95,8 +93,8 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-        tvName.setText(title);
-        tvCategory.setText(category);
+        instanceID = object.getObjectId();
+
         queryPosts();
 
     }
@@ -111,12 +109,19 @@ public class DetailsActivity extends AppCompatActivity {
                     return;
                 }
                 for (Submission submission : objects) {
-                    int rating = submission.getRating();
-                    ratingBar.setRating(rating);
-                    String status = submission.getStatus();
-                    tvStatus.setText(status);
+                    if(submission.getObject().getObjectId().equals(instanceID)){
+                        int rating = submission.getRating();
+                        ratingBar.setRating(rating);
+                        String status = submission.getStatus();
+                        if (status == null) {
+                            status = "N/A";
+                        }
+                        tvStatus.setText(status);
+                    }
+
                 }
             }
         });
+
     }
 }
