@@ -76,6 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
         // Buttons
         btnMenu = (FloatingActionButton) findViewById(R.id.btnMenu);
         btnSettings = (FloatingActionButton) findViewById(R.id.btnSettings);

@@ -59,6 +59,7 @@ public class AddNewActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private CheckBox cbMale;
     private CheckBox cbFemale;
+    private CheckBox cbAllGender;
     private Button btnSubmit;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -78,6 +79,7 @@ public class AddNewActivity extends AppCompatActivity {
         ivPhoto = findViewById(R.id.ivPhoto);
         cbMale = findViewById(R.id.cbMale);
         cbFemale = findViewById(R.id.cbFemale);
+        cbAllGender = findViewById(R.id.cbAllGender);
         btnSubmit = findViewById(R.id.btnSubmit);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -90,10 +92,12 @@ public class AddNewActivity extends AppCompatActivity {
                 MapsActivity maps = new MapsActivity();
 
                 if (location.isEmpty()) {
-                    Toast.makeText(AddNewActivity.this, "Description cannot", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewActivity.this, "Restroom location is empty.", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (photoFile == null || ivPhoto.getDrawable() == null) {
-                    Toast.makeText(AddNewActivity.this, "There is no image!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewActivity.this, "There is no image.", Toast.LENGTH_SHORT).show();
+                } else if (!cbAllGender.isChecked() && !cbFemale.isChecked() && !cbMale.isChecked()) {
+                    Toast.makeText(AddNewActivity.this, "Gender identifiers are unchecked.", Toast.LENGTH_SHORT).show();
                 } else {
                     newRestroom(location, currentUser, photoFile);
                     //maps.saveCurrentUserLocation();
@@ -118,16 +122,22 @@ public class AddNewActivity extends AppCompatActivity {
         newRestroom.setImage(new ParseFile(photoFile));
         newRestroom.setUser(currentUser);
 
-        if (cbFemale.isChecked() && cbMale.isChecked()) {
+        if (cbFemale.isChecked() && cbAllGender.isChecked() || cbMale.isChecked() && cbAllGender.isChecked()) {
             newRestroom.setCategory("All Gender");
         }
+        else if (cbFemale.isChecked() && cbMale.isChecked()) {
+            newRestroom.setCategory("Men/Women");
+        }
         else if (cbFemale.isChecked()) {
-            newRestroom.setCategory("Female");
+            newRestroom.setCategory("Women");
         }
         else if (cbMale.isChecked()) {
-            newRestroom.setCategory("Male");
+            newRestroom.setCategory("Men");
         }
-
+        else if (cbAllGender.isChecked()) {
+            newRestroom.setCategory("All Gender");
+        }
+        /*
         if(ActivityCompat.checkSelfPermission(AddNewActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(AddNewActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(AddNewActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         }
@@ -135,7 +145,10 @@ public class AddNewActivity extends AppCompatActivity {
             Location coords = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             ParseGeoPoint currentUserLocation = new ParseGeoPoint(coords.getLatitude(), coords.getLongitude());
             newRestroom.setLocation(currentUserLocation);
-        }
+        }*/
+
+        ParseGeoPoint currentUserLocation = new ParseGeoPoint(34.0583, -117.8218);
+        newRestroom.setLocation(currentUserLocation);
 
         newRestroom.saveInBackground(new SaveCallback() {
             @Override

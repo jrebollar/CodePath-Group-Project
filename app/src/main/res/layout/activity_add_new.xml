@@ -32,13 +32,19 @@
         android:id="@+id/cbMale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Male" />
+        android:text="Men" />
 
     <CheckBox
         android:id="@+id/cbFemale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Female" />
+        android:text="Women" />
+
+    <CheckBox
+        android:id="@+id/cbAllGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Gender" />
 
     <Button
         android:id="@+id/btnSubmit"

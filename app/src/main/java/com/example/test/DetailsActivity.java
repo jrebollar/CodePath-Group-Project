@@ -121,7 +121,9 @@ public class DetailsActivity extends AppCompatActivity {
                         tvStatus.setText(status);
                     }
                 }
-                ratingBar.setRating(rating/counter);
+                if (counter != 0) {
+                    ratingBar.setRating(rating / counter);
+                }
             }
         });
 
