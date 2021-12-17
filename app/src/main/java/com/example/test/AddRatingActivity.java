@@ -50,11 +50,12 @@ public class AddRatingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(AddRatingActivity.this, MapsActivity.class);
-                /*ParseUser currentUser = ParseUser.getCurrentUser();*/
                 ParseObject currentPlace = getIntent().getParcelableExtra("plc");
-                if(currentPlace == null)
+                if(currentPlace == null) {
                     //Log.d(TAG, "Current place null");
                     Toast.makeText(AddRatingActivity.this, "CurrentPlace is null :(", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 float rating = starrb.getRating();
                 if(rating == 0) {
                     Toast.makeText(AddRatingActivity.this, "Please add a rating", Toast.LENGTH_SHORT).show();

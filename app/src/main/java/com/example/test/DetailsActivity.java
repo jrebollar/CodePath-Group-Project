@@ -42,16 +42,10 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DetailsActivity.this, AddRatingActivity.class);
-                //Toast.makeText(getApplicationContext(), "Pls", Toast.LENGTH_SHORT).show();
-                String un = getIntent().getStringExtra("name");
-                if(un != null) {
-                    //i.putExtra("username", un);
-                    ParseObject object = getIntent().getParcelableExtra("Plc");
-                    i.putExtra("plc", object);
-                    startActivity(i);
-                } else {
-                    Log.d("Detail", "Error: No username found");
-                }
+                ParseObject object = getIntent().getParcelableExtra("Plc");
+                if(object == null) Toast.makeText(DetailsActivity.this, "no object", Toast.LENGTH_SHORT).show();
+                //i.putExtra("plc", (Bundle) getIntent().getParcelableExtra("Plc"));
+                i.putExtra("plc", object);
                 startActivity(i);
             }
         });

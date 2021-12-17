@@ -23,6 +23,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -204,7 +206,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int[] rating = {3};
                 int[] counter = {0};
                 Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
-
                 query1.findInBackground((objects, e1) -> {
                     for (int j = 0; j < objects.size(); j++) {
                         try {
@@ -212,7 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 status[0] = objects.get(j).getString("Status");
                                 rating[0] += objects.get(j).getNumber("Rating").intValue();
                                 //counter[0] += 1;
-                                i1.putExtra("Plc", objects.get(j));
+                                rating[0] = objects.get(j).getNumber("Rating").intValue();
                                 break;
                             }
                         } catch (ParseException parseException) {
@@ -221,6 +222,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     //rating[0] = rating[0]/counter[0];
                 });
+
+                /*query.getInBackground(detailsID[Integer.parseInt(marker1.getId().replaceAll("[^0-9]", ""))], new GetCallback<ParseObject>() {
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null) {
+                            i1.putExtra("Plc", object);
+                        } else {
+                            Log.e(TAG, "Error retrieving user", e);
+                            Toast.makeText(MapsActivity.this, "in the here", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });*/
+                try {
+                    i1.putExtra("Plc", query.get(detailsID[Integer.parseInt(marker1.getId().replaceAll("[^0-9]", ""))]));
+                } catch (ParseException parseException) {
+                    Log.e(TAG, "Error retrieving user", parseException);
+                    Toast.makeText(MapsActivity.this, "in the here", Toast.LENGTH_SHORT).show();
+                }
+
                 // moved i1 declaration stmt so I can add the current object thx -Rebecca
                 i1.putExtra("name", name);
                 i1.putExtra("category", category);
