@@ -12,6 +12,7 @@ public class Submission extends ParseObject {
     public static final String KEY_STATUS = "status";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_PLACE = "place";
+    public static final String KEY_USER = "user";
 
     public int getRating() {
         return getInt(String.valueOf(KEY_RATING));
@@ -54,5 +55,11 @@ public class Submission extends ParseObject {
         put(KEY_PLACE, place);
     }
 
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
+    }
 
+    public void setUser(ParseUser user) {
+        put(KEY_USER, user);
+    }
 }

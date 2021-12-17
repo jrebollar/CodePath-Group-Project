@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 public class SettingsActivity extends AppCompatActivity {
 
 
@@ -20,6 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
     private RadioButton all_genderrb, men_womenrb, menrb, womenrb, allrb;
     private Button button;
     private TextView textView;
+    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,16 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-    }
 
+        btnLogout = findViewById(R.id.btnLogOut);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                ParseUser.logOut();
+                startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+    }
 }

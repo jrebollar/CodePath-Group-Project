@@ -5,6 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
-    android:background="@drawable/gradient_bg">
+    android:background="@drawable/splash_background"
+    android:dither="true"
+    android:layerType="software"
+    android:useLevel="true">
 
+    <ImageView
+        android:id="@+id/ivToilet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_google_noto_emoji_objects_62996_toilet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

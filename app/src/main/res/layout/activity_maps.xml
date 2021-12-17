@@ -47,7 +47,8 @@
         android:focusable="true"
         android:src="@drawable/ic_settings"
 
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:rippleColor="#FFFFFF" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAdd"
@@ -62,6 +63,7 @@
         android:focusable="true"
         android:src="@android:drawable/ic_input_add"
 
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:rippleColor="#FFFFFF" />
 
 </RelativeLayout>

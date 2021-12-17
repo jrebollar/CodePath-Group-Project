@@ -64,4 +64,13 @@
         app:layout_constraintStart_toStartOf="@+id/Filterrg"
         app:layout_constraintTop_toBottomOf="@+id/Filterrg" />
 
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        app:layout_constraintEnd_toEndOf="@+id/saveBtn"
+        app:layout_constraintStart_toStartOf="@+id/saveBtn"
+        app:layout_constraintTop_toBottomOf="@+id/saveBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
