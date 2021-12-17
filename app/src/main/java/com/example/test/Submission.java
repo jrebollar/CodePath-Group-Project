@@ -7,12 +7,12 @@ import com.parse.ParseUser;
 
 @ParseClassName("restrooms")
 public class Submission extends ParseObject {
-    public static final float KEY_RATING = 3;
-    public static final String KEY_COMMENT = "comment";
-    public static final String KEY_STATUS = "status";
-    public static final String KEY_IMAGE = "image";
-    public static final String KEY_PLACE = "place";
-    public static final String KEY_USER = "user";
+    public static final String KEY_RATING = "Rating";
+    public static final String KEY_COMMENT = "Comment";
+    public static final String KEY_STATUS = "Status";
+    public static final String KEY_IMAGE = "image"; // relic from the past
+    public static final String KEY_PLACE = "PlacePointer";
+    public static final String KEY_USER = "user"; // relic from the past
 
     public int getRating() {
         return getInt(String.valueOf(KEY_RATING));
