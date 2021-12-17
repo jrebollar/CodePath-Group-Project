@@ -30,6 +30,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_window);
+
         tvName = findViewById(R.id.name);
         tvStatus = findViewById(R.id.snippet);
         tvCategory = findViewById(R.id.category);

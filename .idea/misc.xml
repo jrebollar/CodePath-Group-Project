@@ -3,33 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3592592592592593" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/bg_gradient.xml" value="0.3592592592592593" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/gradient_bg.xml" value="0.24074074074074073" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/ic_add.xml" value="0.36944444444444446" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3405128205128205" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/ic_settings.xml" value="0.36944444444444446" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/ic_toilet.xml" value="0.4197916666666667" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/splash_background.xml" value="0.67" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/drawable/splash_fg_background.xml" value="0.5697916666666667" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_add_new.xml" value="0.35185185185185186" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_add_rating.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_login.xml" value="0.3314814814814815" />
         <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_maps.xml" value="0.3425925925925926" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_splash.xml" value="0.1" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_splash_screen.xml" value="0.3314814814814815" />
         <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/info_window.xml" value="0.3425925925925926" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3592592592592593" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3592592592592593" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/mipmap-anydpi-v26/splash_fg.xml" value="0.3592592592592593" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/mipmap-anydpi-v26/splash_fg_round.xml" value="0.3592592592592593" />
-        <entry key="..\:/Users/justi/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/xml/fileprovider.xml" value="0.3802083333333333" />
         <entry key="..\:/Users/justi/AndroidStudioProjects/Test2/app/src/main/res/layout/activity_maps.xml" value="0.4041666666666667" />
-        <entry key="..\:/Users/kcper/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/info_window.xml" value="0.1796875" />
+        <entry key="..\:/Users/kcper/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_add_rating.xml" value="0.1796875" />
+        <entry key="..\:/Users/kcper/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/info_window.xml" value="0.22" />
         <entry key="..\:/Users/kcper/AndroidStudioProjects/Code_Path-Group-Project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/kcper/AndroidStudioProjects/Code_Path-Group-Project/app/src/main/res/layout/activity_maps.xml" value="0.1796875" />
         <entry key="..\:/Users/kcper/AndroidStudioProjects/Code_Path-Group-Project/app/src/main/res/layout/info_window.xml" value="0.1796875" />
         <entry key="..\:/Users/kcper/AndroidStudioProjects/Code_Path-Group-Project/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/rlee5/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_add_new.xml" value="0.2796875" />
+        <entry key="..\:/Users/rlee5/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_add_rating.xml" value="0.2796875" />
+        <entry key="..\:/Users/rlee5/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_maps.xml" value="0.146875" />
+        <entry key="..\:/Users/rlee5/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/activity_settings.xml" value="0.2796875" />
+        <entry key="..\:/Users/rlee5/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/info_window.xml" value="0.2796875" />
+        <entry key="..\:/Users/rlee5/AndroidStudioProjects/CodePath-Group-Project/app/src/main/res/layout/settings.xml" value="0.25" />
       </map>
     </option>
   </component>

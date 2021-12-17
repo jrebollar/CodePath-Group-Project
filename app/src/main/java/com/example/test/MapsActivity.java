@@ -167,7 +167,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void showRestroomsInMap(final GoogleMap googleMap){
         String[] detailsID = new String[35];
         String[] status = {""};
-        int[] rating = {3};
 
         //ParseQuery<ParseUser> query = ParseUser.getQuery();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("place");
@@ -185,7 +184,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for(int i = 0; i < restrooms.size(); i++) {
                     LatLng rrLocation = new LatLng(restrooms.get(i).getParseGeoPoint("Location").getLatitude(), restrooms.get(i).getParseGeoPoint("Location").getLongitude());
                     Marker marker = googleMap.addMarker(new MarkerOptions().position(rrLocation).title(restrooms.get(i).getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                    marker.setTitle(restrooms.get(i).getString("username"));
+                    marker.setTitle(restrooms.get(i).getString("name"));
                     marker.setSnippet(restrooms.get(i).getString("Category"));
                     detailsID[i] = restrooms.get(i).getObjectId();
 
@@ -201,16 +200,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 ParseQuery<ParseObject> query1 = new ParseQuery<>("restrooms");
                 query1.whereExists("Rating");
-                query1.whereEqualTo("restrooms", "PlacePointer");
-
+                query1.whereEqualTo("PlacePointer", marker1.getId());
+                int[] rating = {3};
+                int[] counter = {0};
                 Intent i1 = new Intent(MapsActivity.this, DetailsActivity.class);
 
                 query1.findInBackground((objects, e1) -> {
                     for (int j = 0; j < objects.size(); j++) {
                         try {
-                            if (name.equals(objects.get(j).getParseObject("PlacePointer").fetchIfNeeded().getString("name"))) {
+                            if (marker1.getId().equals(objects.get(j).getParseObject("PlacePointer").fetchIfNeeded().getObjectId())) {
                                 status[0] = objects.get(j).getString("Status");
-                                rating[0] = objects.get(j).getNumber("Rating").intValue();
+                                rating[0] += objects.get(j).getNumber("Rating").intValue();
+                                //counter[0] += 1;
                                 i1.putExtra("Plc", objects.get(j));
                                 break;
                             }
@@ -218,6 +219,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             parseException.printStackTrace();
                         }
                     }
+                    //rating[0] = rating[0]/counter[0];
                 });
                 // moved i1 declaration stmt so I can add the current object thx -Rebecca
                 i1.putExtra("name", name);
