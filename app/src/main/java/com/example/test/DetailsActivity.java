@@ -108,18 +108,20 @@ public class DetailsActivity extends AppCompatActivity {
                 if (e != null) {
                     return;
                 }
+                int counter = 0;
+                int rating = 0;
                 for (Submission submission : objects) {
                     if(submission.getObject().getObjectId().equals(instanceID)){
-                        int rating = submission.getRating();
-                        ratingBar.setRating(rating);
+                        counter++;
+                        rating += submission.getRating();
                         String status = submission.getStatus();
                         if (status == null) {
                             status = "N/A";
                         }
                         tvStatus.setText(status);
                     }
-
                 }
+                ratingBar.setRating(rating/counter);
             }
         });
 
